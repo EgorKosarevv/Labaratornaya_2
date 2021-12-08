@@ -70,6 +70,73 @@ int quick_sort(int* a, int left, int right)
 		quick_sort(a, left, j);
 	}
 }
+int norma1(int* mas, int N)
+{
+	int i;
+	int norma1 = 0;
+	for (i = 0; i <N; i++)
+	{
+		norma1 += abs(mas[i]);
+	}
+	printf("Первая норма вектора равна %d\n\n", norma1);
+}
+int norma2(int* mas, int N1)
+{
+	int i;
+	int sum = 0;
+	double norma2 = 0;
+	for (i = 0; i < N1; i++)
+	{
+		sum += pow(abs(mas[i]),2);
+		norma2 = sqrt(sum);
+	}
+	printf("Вторая норма вектора равна %lf\n\n", norma2);
+}
+int Gelderovaya_norma(int* mas, int N1, int p)
+{
+	int i;
+	double sum = 0;
+	double normaG = 0;
+	for (i = 0; i < N1; i++)
+	{
+		sum += pow(abs(mas[i]), p);
+		normaG = pow(sum,pow (p,-1));
+	}
+	printf("Гельдеровая норма вектора равна %lf\n\n", normaG);
+}
+int beskonechnaya_norma(int* mas, int n)
+{
+	int a;
+	int i;
+	int modul;
+	int max = 0;
+	for (i = 0; i < n; i++)
+	{
+		modul = abs(mas[i]);
+		if (modul > max)
+		{
+			max = modul;
+		}
+	}
+	printf("Бесконечная норма вектора равна %d\n\n", max);
+}
+int normirovka(int* mas, int N1)
+{
+	int i;
+	int sum = 0;
+	double koren;
+	for (i = 0; i < N1; i++)
+	{
+		sum += pow(abs(mas[i]), 2);
+		koren = sqrt(sum);
+	}
+	printf("Нормировка вектора: \n\n");
+	for (i = 0; i < N1; i++)
+	{
+		printf("mas[%d] = %lf\n",i, mas[i] / koren);
+	}
+	printf("\n\n\n");
+}
 int main()
 {
 	int* mas;
@@ -94,17 +161,17 @@ int main()
 	fclose(file);
 		do
 		{
-		    printf("Выберите нужное действие:\n1) Печать\n2) Сортировка\n3) Сброс\n4) Выход\n");
+		    printf("Выберите нужное действие:\n1) Печать\n2) Сортировка\n3) Сброс\n4) Выход\n5) Вычислить первую норму вектора\n6) Вычислить вторую норму вектора\n7) Вычислить Гельдеровую норму вектора\n8) Вычислить бесконечную норму вектора\n9) Нормировка вектора\n");
 			printf("Введите число: ");
 			do
 			{
 				scanf_s("%d", &choice);
-				if (choice > 4 || choice <= 0)
+				if (choice > 9 || choice <= 0)
 				{
 					printf("Ошибка! Введите корректные данные");
 					return 0;
 				}
-			} while (choice > 4 || choice <= 0);
+			} while (choice > 9 || choice <= 0);
 			if (choice == 1)
 			{
 				clear();
@@ -172,7 +239,42 @@ int main()
 				printf("Выход из программы осуществлен\n\n");
 				return 0;
 			}
-		} while (choice == 1 || choice == 2 || choice == 3 || choice == 4);
+			if (choice == 5)
+			{
+				clear();
+				norma1(mas, n);
+			}
+			if (choice == 6)
+			{
+				clear();
+				norma2(mas, n);
+			}
+			if (choice == 7)
+			{
+				clear();
+				printf("Введите степень: ");
+				do
+				{
+					scanf_s("%d", &p);
+					if (p <= 0)
+					{
+						printf("Ошибка! Введите корректные значения ");
+						return 0;
+					}
+				} while (p <= 0);
+				Gelderovaya_norma(mas, n, p);
+			}
+			if (choice == 8)
+			{
+				clear();
+				beskonechnaya_norma(mas, n);
+			}
+			if (choice == 9)
+			{
+				clear();
+				normirovka(mas, n);
+			}		       
+		} while (choice == 1 || choice == 2 || choice == 3 || choice == 4 || choice == 5 || choice ==6 || choice == 7 || choice ==8 || choice == 9);
 		free(mas);
 		return 0;
 }
